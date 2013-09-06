@@ -16,10 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+default['munin']['user'] = "munin"
+default['munin']['group'] = "munin"
 default['munin']['sysadmin_email'] = "ops@example.com"
 default['munin']['server_role'] = 'monitoring'
-default['munin']['server_auth_method'] = 'openid'
+default['munin']['server_auth_method'] = 'htauth'
 default['munin']['multi_environment_monitoring'] = false
 
 default['munin']['web_server'] = 'apache'

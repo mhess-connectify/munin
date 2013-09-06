@@ -16,3 +16,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+case node['platform']
+        when "debian", "ubuntu"
+            execute "update_repo" do
+                command 'apt-get update'
+            end
+        when "centos", "fedora"
+            include_recipe "yum::epel"
+end
+
+include_recipe "munin::server"
+#include_recipe "munin::client"
+
+group node[:munin][:group]
+
+user node[:munin][:user] do
+    group node[:munin][:group]
+    system true
+    shell "/bin/bash"
+end
+
+case node['platform']
+        when "debian", "ubuntu"
+        service "cron" do
+            action :start
+        end
+        when "centos", "fedora"
+        service "crond" do
+            action :start
+        end
+end
